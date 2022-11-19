@@ -50,7 +50,7 @@ def get_bearing(lat1, lon1, lat2, lon2):
     # Y = cos θa * sin θb – sin θa * cos θb * cos ∆L
 
     x = math.cos(lat2) * math.sin(lon2 - lon1)
-    y = math.cos(lat1) * math.sin(lat2) - math.sin(lat1) * math.cos(lat2) * math.cos(lon2 - lon1)
+    y = (math.cos(lat1) * math.sin(lat2)) - (math.sin(lat1) * math.cos(lat2) * math.cos(lon2 - lon1))
     bearing = math.atan2(x, y)
     bearing_degrees  = math.degrees(bearing) - 180
     return bearing_degrees
