@@ -1,9 +1,5 @@
-import os
-from time import sleep
-import ee
 import private
 import pydeck as pdk
-from pydeck_earthengine_layers import EarthEngineTerrainLayer, EarthEngineLayer
 from flight_data import get_flight_details, get_bearing
 
 

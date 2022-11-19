@@ -1,8 +1,8 @@
 from time import sleep
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
+import math
     
 def get_flight_details(flight_number:str):
     options = Options()
@@ -41,7 +41,7 @@ def get_flight_details(flight_number:str):
 
 def get_bearing(lat1, lon1, lat2, lon2):
     # Given two points, return the bearing between them
-    import math
+    
 
     # Bearing = atan2(X, Y)
 
