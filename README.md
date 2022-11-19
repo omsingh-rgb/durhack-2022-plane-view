@@ -28,3 +28,23 @@ https://account.mapbox.com/auth/signup/
 Create a file called `private.py` within the app directory.
 
 Add the api key into `private.py` as ```KEY=API_KEY```
+
+
+Install Node (LTS should work)
+```
+https://nodejs.org/en/
+```
+
+In one terminal start the python app
+```
+python app/google_earth.py
+```
+
+In another new terminal
+```
+cd node-app
+npm install
+npm run watch
+```
+
+Navigate to localhost:3000
