@@ -2,7 +2,6 @@ selenium
 requests
 cesiumpy
 pandas
-matplotlib
 geemap
 pydeck
 pydeck-earthengine-layers

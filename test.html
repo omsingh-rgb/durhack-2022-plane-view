@@ -33,30 +33,26 @@
     const container = document.getElementById('deck-container');
     const jsonInput = {
   "initialViewState": {
-    "bearing": -66.16,
-    "latitude": 36.15,
-    "longitude": -111.96,
-    "pitch": 60,
-    "zoom": 10.5
+    "bearing": -27.36,
+    "latitude": 52.937,
+    "longitude": 13.294,
+    "maxZoom": 15,
+    "minZoom": 5,
+    "pitch": 40.5,
+    "zoom": 11.5
   },
   "layers": [
     {
-      "@@type": "EarthEngineTerrainLayer",
-      "_token": "ya29.a0AeTM1ie_9_aPW8QJavEZAUoXEHsejdBr9y3-jbhPEZYd78nzFNdeTgSedlMWRnu87xMiqkF83Dtz-l9aBSb_oU1gKj9vhziJR2XBQE-6yfpUpODOwoSvVd5R6l_shtPntqM3SeWfQnX5hPUTuS8aDQ25FfgpaCgYKAWESARASFQHWtWOmnmiQy5acwerY8i-kazfP3A0163",
-      "eeObject": "{\"result\": \"0\", \"values\": {\"0\": {\"functionInvocationValue\": {\"functionName\": \"Image.select\", \"arguments\": {\"bandSelectors\": {\"constantValue\": [\"elevation\"]}, \"input\": {\"functionInvocationValue\": {\"functionName\": \"Image.load\", \"arguments\": {\"id\": {\"constantValue\": \"USGS/NED\"}}}}}}}}}",
-      "eeTerrainObject": "{\"result\": \"0\", \"values\": {\"0\": {\"functionInvocationValue\": {\"functionName\": \"Image.select\", \"arguments\": {\"bandSelectors\": {\"constantValue\": [\"elevation\"]}, \"input\": {\"functionInvocationValue\": {\"functionName\": \"Image.load\", \"arguments\": {\"id\": {\"constantValue\": \"USGS/NED\"}}}}}}}}}",
-      "id": "EETerrainLayer",
-      "visParams": {
-        "max": 4000,
-        "min": 0,
-        "palette": [
-          "006633",
-          "E5FFCC",
-          "662A00",
-          "D8D8D8",
-          "F5F5F5"
-        ]
-      }
+      "@@type": "TerrainLayer",
+      "elevationData": "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png",
+      "elevationDecoder": {
+        "bScaler": 0.00390625,
+        "gScaler": 1,
+        "offset": -32768,
+        "rScaler": 256
+      },
+      "id": "75027bd9-abe9-409c-b433-264608893b70",
+      "texture": "https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1IjoiZGF2aWQwMTM5MCIsImEiOiJjbGFvOThsN20weGI4M3ZvNXh0cmxod3A4In0.r3hSvn4kkNKCet3D9EzwYA"
     }
   ],
   "mapProvider": "carto",
@@ -69,7 +65,7 @@
   ]
 };
     const tooltip = true;
-    const customLibraries = [{'libraryName': 'EarthEngineLayerLibrary', 'resourceUri': 'https://unpkg.com/@unfolded.gl/earthengine-layers@1.2.1/dist/pydeck_layer_module.min.js'}];
+    const customLibraries = null;
     const configuration = null;
 
     const deckInstance = createDeck({

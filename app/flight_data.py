@@ -10,6 +10,7 @@ def get_flight_details(flight_number:str):
     driver = webdriver.Chrome(options=options)
     driver.get(f"https://www.radarbox.com/flight/{flight_number}")
     i = 0
+    sleep(2)
     while i < 10:
         try:
             elem = driver.find_element(By.ID, "fc-details")

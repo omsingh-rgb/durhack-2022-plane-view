@@ -20,3 +20,11 @@ Install gcloud
 https://cloud.google.com/sdk/docs/install
 ```
 
+Make an account and get the api key - Easy - No card info
+```
+https://account.mapbox.com/auth/signup/
+```
+
+Create a file called `private.py` within the app directory.
+
+Add the api key into `private.py` as ```KEY=API_KEY```

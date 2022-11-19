@@ -1,32 +1,53 @@
+import os
+from time import sleep
 import ee
 import private
-import matplotlib.pyplot as plt
 import pydeck as pdk
-from pydeck_earthengine_layers import EarthEngineTerrainLayer
+from pydeck_earthengine_layers import EarthEngineTerrainLayer, EarthEngineLayer
+from flight_data import get_flight_details
 
 def main():
     # Initialize the library.
-    try:
-        ee.Initialize()
-    except:
-        ee.Authenticate(auth_mode="notebook")
-        ee.Initialize()
+    # try:
+    #     ee.Initialize()
+    # except:
+    #     ee.Authenticate(auth_mode="notebook")
+    #     ee.Initialize()
 
-    image = ee.Image('USGS/NED').select('elevation')
-    terrain = ee.Image('USGS/NED').select('elevation')
-    vis_params = {
-        "min": 0,
-        "max": 4000,
-        "palette": ['006633', 'E5FFCC', '662A00', 'D8D8D8', 'F5F5F5'],
-    }
-    ee_layer = EarthEngineTerrainLayer(image, terrain, vis_params, id="EETerrainLayer")
-    view_state = pdk.ViewState(
-        latitude=36.15, longitude=-111.96, zoom=10.5, bearing=-66.16, pitch=60
+
+    MAPBOX_API_KEY = private.KEY
+
+    # AWS Open Data Terrain Tiles
+    TERRAIN_IMAGE = "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png"
+
+    # Define how to parse elevation tiles
+    ELEVATION_DECODER = {"rScaler": 256, "gScaler": 1, "bScaler": 1 / 256, "offset": -32768}
+
+    SURFACE_IMAGE = f"https://api.mapbox.com/v4/mapbox.satellite/{{z}}/{{x}}/{{y}}@2x.png?access_token={MAPBOX_API_KEY}"
+
+    terrain_layer = pdk.Layer(
+        "TerrainLayer", elevation_decoder=ELEVATION_DECODER, texture=SURFACE_IMAGE, elevation_data=TERRAIN_IMAGE
     )
 
-    r = pdk.Deck(layers=[ee_layer], initial_view_state=view_state)
 
+    view_state = pdk.ViewState(latitude=46.24, longitude=-122.18, zoom=11.5, bearing=140, pitch=60)
+
+    r = pdk.Deck([terrain_layer], initial_view_state=view_state)
     r.to_html("test.html", open_browser=True)
+    while True:
+        sleep(2)
+        data = get_flight_details("FIN5XB")
+        view_state = pdk.ViewState(
+        longitude=float(data["Longitude"]),
+        latitude=float(data["Latitude"]),
+        zoom=11.5,
+        min_zoom=5,
+        max_zoom=15,
+        pitch=40.5,
+        bearing=-27.36)
+        r.view_state = view_state
+        r = pdk.Deck([terrain_layer], initial_view_state=view_state)
+        r.to_html("test.html", open_browser=False)
 
 if __name__=="__main__":
     main()
