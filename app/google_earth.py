@@ -2,7 +2,7 @@ import ee
 
 def main():
     # Trigger the authentication flow.
-    ee.Authenticate()
+    ee.Authenticate(auth_mode='gcloud')
 
     # Initialize the library.
     ee.Initialize()
