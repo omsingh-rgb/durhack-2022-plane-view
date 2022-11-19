@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <title>pydeck</title>
+        <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+    <script src='https://cdn.jsdelivr.net/npm/@deck.gl/jupyter-widget@~8.8.*/dist/index.js'></script>
+    <style>
+    body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+#deck-container {
+  width: 100vw;
+  height: 100vh;
+}
+
+#deck-container canvas {
+  z-index: 1;
+  background: none;
+}
+    </style>
+  </head>
+  <body>
+    <div id="deck-container">
+    </div>
+  </body>
+  <script>
+    const container = document.getElementById('deck-container');
+    const jsonInput = {
+  "initialViewState": {
+    "bearing": -66.16,
+    "latitude": 36.15,
+    "longitude": -111.96,
+    "pitch": 60,
+    "zoom": 10.5
+  },
+  "layers": [
+    {
+      "@@type": "EarthEngineTerrainLayer",
+      "_token": "ya29.a0AeTM1ie_9_aPW8QJavEZAUoXEHsejdBr9y3-jbhPEZYd78nzFNdeTgSedlMWRnu87xMiqkF83Dtz-l9aBSb_oU1gKj9vhziJR2XBQE-6yfpUpODOwoSvVd5R6l_shtPntqM3SeWfQnX5hPUTuS8aDQ25FfgpaCgYKAWESARASFQHWtWOmnmiQy5acwerY8i-kazfP3A0163",
+      "eeObject": "{\"result\": \"0\", \"values\": {\"0\": {\"functionInvocationValue\": {\"functionName\": \"Image.select\", \"arguments\": {\"bandSelectors\": {\"constantValue\": [\"elevation\"]}, \"input\": {\"functionInvocationValue\": {\"functionName\": \"Image.load\", \"arguments\": {\"id\": {\"constantValue\": \"USGS/NED\"}}}}}}}}}",
+      "eeTerrainObject": "{\"result\": \"0\", \"values\": {\"0\": {\"functionInvocationValue\": {\"functionName\": \"Image.select\", \"arguments\": {\"bandSelectors\": {\"constantValue\": [\"elevation\"]}, \"input\": {\"functionInvocationValue\": {\"functionName\": \"Image.load\", \"arguments\": {\"id\": {\"constantValue\": \"USGS/NED\"}}}}}}}}}",
+      "id": "EETerrainLayer",
+      "visParams": {
+        "max": 4000,
+        "min": 0,
+        "palette": [
+          "006633",
+          "E5FFCC",
+          "662A00",
+          "D8D8D8",
+          "F5F5F5"
+        ]
+      }
+    }
+  ],
+  "mapProvider": "carto",
+  "mapStyle": "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json",
+  "views": [
+    {
+      "@@type": "MapView",
+      "controller": true
+    }
+  ]
+};
+    const tooltip = true;
+    const customLibraries = [{'libraryName': 'EarthEngineLayerLibrary', 'resourceUri': 'https://unpkg.com/@unfolded.gl/earthengine-layers@1.2.1/dist/pydeck_layer_module.min.js'}];
+    const configuration = null;
+
+    const deckInstance = createDeck({
+                  container,
+      jsonInput,
+      tooltip,
+      customLibraries,
+      configuration
+    });
+
+  </script>
+</html>
