@@ -31,8 +31,8 @@ def main(flight_number:str) -> None:
 
 
     view_state = pdk.ViewState(latitude=46.24, longitude=-122.18, zoom=11.5, bearing=140, pitch=60)
-
-    r: pdk.Deck = pdk.Deck([terrain_layer], initial_view_state=view_state)
+    view = pdk.View(type="MapView",controller=False)
+    r: pdk.Deck = pdk.Deck([terrain_layer], initial_view_state=view_state, views=[view])
     r.to_html("test.html", open_browser=True)
     while True:
         try:
@@ -49,8 +49,8 @@ def main(flight_number:str) -> None:
         pitch=40.5,
         bearing=-27.36)
         r.view_state = view_state
-        r = pdk.Deck([terrain_layer], initial_view_state=view_state)
+        r = pdk.Deck([terrain_layer], initial_view_state=view_state, views=[view])
         r.to_html("test.html", open_browser=False, )
 
 if __name__=="__main__":
-    main()
+    main("X32263")
