@@ -10,6 +10,7 @@ def get_flight_details(flight_number:str):
     driver = webdriver.Chrome(options=options)
     driver.get(f"https://www.radarbox.com/flight/{flight_number}")
     i = 0
+    sleep(2)
     while i < 10:
         try:
             elem = driver.find_element(By.ID, "fc-details")
@@ -18,7 +19,9 @@ def get_flight_details(flight_number:str):
             assert len(text_p) >= 6
             break
         except:
-            sleep(1)
+            driver.get(f"https://www.radarbox.com/flight/{flight_number}")
+            sleep(5)
+            
             i += 1
     if i == 10:
         raise Exception("Could not find flight details")
