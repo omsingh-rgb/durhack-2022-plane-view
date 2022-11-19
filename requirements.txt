@@ -1,4 +1,4 @@
 selenium
 requests
-earthengine-api
+cesiumpy
 pandas

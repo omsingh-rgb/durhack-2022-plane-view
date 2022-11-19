@@ -1,8 +1,8 @@
 import ee
-
+import private
 def main():
     # Trigger the authentication flow.
-    ee.Authenticate(auth_mode='gcloud')
+    ee.Authenticate(auth_mode="notebook")
 
     # Initialize the library.
     ee.Initialize()
