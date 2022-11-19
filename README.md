@@ -14,3 +14,9 @@ source .env/Scripts/Activate
 python -m pip install -r requirements.txt
 python -m pip install -e .
 ```
+
+Install gcloud
+```
+https://cloud.google.com/sdk/docs/install
+```
+
