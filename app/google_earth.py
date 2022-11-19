@@ -30,7 +30,7 @@ def main(flight_number:str) -> None:
     view_state = pdk.ViewState(latitude=46.24, longitude=-122.18, zoom=11.5, bearing=140, pitch=60)
     view = pdk.View(type="MapView",controller=False)
     r: pdk.Deck = pdk.Deck([terrain_layer], initial_view_state=view_state, views=[view])
-    r.to_html("./node-app/test.html", open_browser=True)
+    r.to_html("./node-app/routes/index.html", open_browser=True)
     prev_data = None
     bearing = 0
     while True:
@@ -56,7 +56,7 @@ def main(flight_number:str) -> None:
         r.view_state = view_state
         r = pdk.Deck([terrain_layer], initial_view_state=view_state, views=[view],)
         r.update()
-        r.to_html("./node-app/test.html", open_browser=False, )
+        r.to_html("./node-app/routes/index.html", open_browser=False, )
 
 if __name__=="__main__":
     main("AFR71KF")

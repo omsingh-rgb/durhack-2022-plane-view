@@ -20,7 +20,7 @@ def get_flight_details(flight_number:str):
             break
         except:
             driver.get(f"https://www.radarbox.com/flight/{flight_number}")
-            sleep(5)
+            sleep(2)
             
             i += 1
     if i == 10:
