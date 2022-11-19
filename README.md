@@ -44,6 +44,7 @@ In another new terminal
 ```
 cd node-app
 npm install
+npm i -D nodemon livereload connect-livereload
 npm run watch
 ```
 
