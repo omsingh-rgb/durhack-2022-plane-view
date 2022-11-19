@@ -4,7 +4,8 @@ import ee
 import private
 import pydeck as pdk
 from pydeck_earthengine_layers import EarthEngineTerrainLayer, EarthEngineLayer
-from flight_data import get_flight_details
+from flight_data import get_flight_details, get_bearing
+
 
 def main(flight_number:str) -> None:
     # Initialize the library.
@@ -34,9 +35,17 @@ def main(flight_number:str) -> None:
     view = pdk.View(type="MapView",controller=False)
     r: pdk.Deck = pdk.Deck([terrain_layer], initial_view_state=view_state, views=[view])
     r.to_html("test.html", open_browser=True)
+    prev_data = None
+    bearing = 0
     while True:
         try:
             data = get_flight_details(flight_number)
+            if prev_data is None:
+                prev_data = data
+            l_previous = [float(prev_data["Latitude"]), float(prev_data["Longitude"])]
+            l_current = [float(data["Latitude"]), float(data["Longitude"])]
+            bearing = get_bearing(l_current[0], l_current[1],l_previous[0], l_previous[1])
+
         except Exception as e:
             print(f"\t Error: {e}")
             continue
@@ -47,9 +56,9 @@ def main(flight_number:str) -> None:
         min_zoom=5,
         max_zoom=15,
         pitch=40.5,
-        bearing=-27.36)
+        bearing=bearing)
         r.view_state = view_state
-        r = pdk.Deck([terrain_layer], initial_view_state=view_state, views=[view])
+        r = pdk.Deck([terrain_layer], initial_view_state=view_state, views=[view],)
         r.to_html("test.html", open_browser=False, )
 
 if __name__=="__main__":

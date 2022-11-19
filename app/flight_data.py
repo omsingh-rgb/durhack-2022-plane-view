@@ -10,18 +10,20 @@ def get_flight_details(flight_number:str):
     driver = webdriver.Chrome(options=options)
     driver.get(f"https://www.radarbox.com/flight/{flight_number}")
     i = 0
-    sleep(2)
     while i < 10:
         try:
             elem = driver.find_element(By.ID, "fc-details")
+            text = elem.text
+            text_p = text.strip().split("\n")
+            assert len(text_p) >= 6
             break
         except:
             sleep(1)
             i += 1
+    if i == 10:
+        raise Exception("Could not find flight details")
     # get the text
-    text = elem.text
-
-    text_p = text.strip().split("\n")
+    
     
     output = {"Flight Number":flight_number}
 
@@ -36,3 +38,19 @@ def get_flight_details(flight_number:str):
     
     print(output)
     return output
+
+def get_bearing(lat1, lon1, lat2, lon2):
+    # Given two points, return the bearing between them
+    import math
+
+    # Bearing = atan2(X, Y)
+
+    # X = cos θb * sin ∆L
+
+    # Y = cos θa * sin θb – sin θa * cos θb * cos ∆L
+
+    x = math.cos(lat2) * math.sin(lon2 - lon1)
+    y = math.cos(lat1) * math.sin(lat2) - math.sin(lat1) * math.cos(lat2) * math.cos(lon2 - lon1)
+    bearing = math.atan2(x, y)
+    bearing_degrees  = math.degrees(bearing) - 180
+    return bearing_degrees
