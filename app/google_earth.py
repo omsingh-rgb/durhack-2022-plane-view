@@ -27,7 +27,7 @@ def showFlight(flight_number:str) -> None:
     r: pdk.Deck = pdk.Deck([terrain_layer], initial_view_state=view_state, views=[view])
     html = r.to_html(as_string = True)
 
-    html = addOverlay(html, 0, 43, 0, 20)
+    html = addOverlay(html, 0, 43, 0, 20, flight_number)
     with open("./node-app/routes/index.html", "w") as file: 
         file.write(html)
 
@@ -60,13 +60,13 @@ def showFlight(flight_number:str) -> None:
         r = pdk.Deck([terrain_layer], initial_view_state=view_state, views=[view],)
         html = r.to_html(as_string = True)
 
-        html = addOverlay(html, data["Altitude"], data["Longitude"], data["Latitude"], bearing)
+        html = addOverlay(html, data["Altitude"], data["Longitude"], data["Latitude"], bearing, flight_number)
         with open("./node-app/routes/index.html", "w") as file: 
             file.write(html)
         #r.to_html("./node-app/routes/index.html", open_browser=False, 
 
 
-def addOverlay(html, altitude, longitude, latitude, bearing):
+def addOverlay(html, altitude, longitude, latitude, bearing, flight_number):
 
     segments = html.split("<body>")
 
@@ -79,6 +79,8 @@ def addOverlay(html, altitude, longitude, latitude, bearing):
                      right: 0;
                      bottom: 0;
                      z-index: 2;'> 
+            <h1 style='color: white;
+                       font-family: courier, monospace'>Flight Number : {flight_number}</h1>
             <h1 style='color: white;
                        font-family: courier, monospace'>Longitude : {longitude}</h1>
             <h1 style='color: white;
