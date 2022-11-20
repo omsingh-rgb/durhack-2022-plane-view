@@ -7,4 +7,9 @@ router.get('/', function(req, res, next) {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
+/* GET home page. */
+router.get('/image.png', function(req, res, next) {
+  res.sendFile(path.join(__dirname, 'image.png'));
+});
+
 module.exports = router;

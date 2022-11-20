@@ -1,4 +1,4 @@
-import private
+#import private
 import pydeck as pdk
 from flight_data import get_flight_details, get_bearing
 
@@ -12,7 +12,7 @@ def main(flight_number:str) -> None:
     #     ee.Initialize()
 
 
-    MAPBOX_API_KEY = private.KEY
+    MAPBOX_API_KEY = 'pk.eyJ1Ijoib3MyMjEiLCJhIjoiY2xhb2M3MTZvMHkzeDNxdDdxeG1tcmI5MiJ9.OuX7IpkQnFyJM0H4yXLJ7A'
 
     # AWS Open Data Terrain Tiles
     TERRAIN_IMAGE = "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png"
@@ -27,12 +27,20 @@ def main(flight_number:str) -> None:
     )
 
 
-    view_state = pdk.ViewState(latitude=46.24, longitude=-122.18, zoom=11.5, bearing=140, pitch=60)
+    view_state = pdk.ViewState(latitude=46.24, longitude=-122.18, zoom=11.5, bearing=140, pitch=75)
     view = pdk.View(type="MapView",controller=False)
     r: pdk.Deck = pdk.Deck([terrain_layer], initial_view_state=view_state, views=[view])
-    r.to_html("./node-app/routes/index.html", open_browser=True)
+    html = r.to_html(as_string = True)
+
+    html = addOverlay(html, 0, 43, 0, 20)
+    with open("./node-app/routes/index.html", "w") as file: 
+        file.write(html)
+
+    #r.to_html("./node-app/routes/index.html", open_browser=True)
     prev_data = None
     bearing = 0
+
+    
     while True:
         try:
             data = get_flight_details(flight_number)
@@ -51,12 +59,50 @@ def main(flight_number:str) -> None:
         zoom=11.5,
         min_zoom=5,
         max_zoom=15,
-        pitch=40.5,
+        pitch=70,
         bearing=bearing)
         r.view_state = view_state
         r = pdk.Deck([terrain_layer], initial_view_state=view_state, views=[view],)
-        r.update()
-        r.to_html("./node-app/routes/index.html", open_browser=False, )
+        html = r.to_html(as_string = True)
+
+        html = addOverlay(html, data["Altitude"], data["Longitude"], data["Latitude"], bearing)
+        with open("./node-app/routes/index.html", "w") as file: 
+            file.write(html)
+        #r.to_html("./node-app/routes/index.html", open_browser=False, 
+
+
+def addOverlay(html, altitude, longitude, latitude, bearing):
+
+    segments = html.split("<body>")
+
+    toadd = f""" 
+        <div style= 'position: fixed;
+                     width: 100%;
+                     height: 100%;
+                     top: 0;
+                     left: 0;
+                     right: 0;
+                     bottom: 0;
+                     z-index: 2;'> 
+            <h1 style='color: white;
+                       font-family: courier, monospace'>Longitude : {longitude}</h1>
+            <h1 style='color: white;
+                       font-family: courier, monospace'>Latitude  : {latitude}</h1>
+            <h1 style='color: white;
+                       font-family: courier, monospace'>Altitude  : {altitude}</h1>
+            <img src='image.png' style='position:absolute;
+                                        bottom:30px;
+                                        right:30px;
+                                        width:100px;
+                                        height:120px; 
+                                        transform: rotate({-bearing}deg);'>
+        
+        </div>
+    
+    """
+
+    segments[1] = toadd + segments[1]
+    return '<body>'.join(segments)
 
 if __name__=="__main__":
-    main("AFR71KF")
+    main("V03750")
