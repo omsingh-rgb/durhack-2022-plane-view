@@ -1,9 +1,9 @@
-#import private
+import private
 import pydeck as pdk
 from flight_data import get_flight_details, get_bearing
 
 
-def main(flight_number:str) -> None:
+def showFlight(flight_number:str) -> None:
     # Initialize the library.
     # try:
     #     ee.Initialize()
@@ -12,7 +12,7 @@ def main(flight_number:str) -> None:
     #     ee.Initialize()
 
 
-    MAPBOX_API_KEY = 'pk.eyJ1Ijoib3MyMjEiLCJhIjoiY2xhb2M3MTZvMHkzeDNxdDdxeG1tcmI5MiJ9.OuX7IpkQnFyJM0H4yXLJ7A'
+    MAPBOX_API_KEY = private.KEY
 
     # AWS Open Data Terrain Tiles
     TERRAIN_IMAGE = "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png"
@@ -103,6 +103,3 @@ def addOverlay(html, altitude, longitude, latitude, bearing):
 
     segments[1] = toadd + segments[1]
     return '<body>'.join(segments)
-
-if __name__=="__main__":
-    main("V03750")

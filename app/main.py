@@ -1,9 +1,5 @@
-
-from flight_data import get_flight_details
-
-def main():
-    pass
+from google_earth import showFlight
 
 if __name__=="__main__":
-    pass
-
+    flight_number = input("Enter Flight Number: ")
+    showFlight(flight_number)
