@@ -4,13 +4,8 @@ from flight_data import get_flight_details, get_bearing
 
 
 def showFlight(flight_number:str) -> None:
-    # Initialize the library.
-    # try:
-    #     ee.Initialize()
-    # except:
-    #     ee.Authenticate(auth_mode="notebook")
-    #     ee.Initialize()
 
+    print(f"Starting to show Flight Sim For {flight_number}")
 
     MAPBOX_API_KEY = private.KEY
 

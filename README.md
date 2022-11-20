@@ -37,7 +37,7 @@ https://nodejs.org/en/
 
 In one terminal start the python app
 ```
-python app/google_earth.py
+python app/main.py
 ```
 
 In another new terminal
